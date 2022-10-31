@@ -1,3 +1,11 @@
+# fork
+
+forked to remove `jcenter`
+
+checkout <https://github.com/wix/react-native-notifications>
+
+---------
+
 # React Native Push Notifications
 
 [![npm version](https://badge.fury.io/js/react-native-push-notification.svg?update=9)](http://badge.fury.io/js/react-native-push-notification)
@@ -223,7 +231,6 @@ public class MainApplication extends Application implements ReactApplication {
 **DO NOT USE `.configure()` INSIDE A COMPONENT, EVEN `App`**
 > If you do, notification handlers will not fire, because they are not loaded. Instead, use `.configure()` in the app's first file, usually `index.js`.
 
-
 ```javascript
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
@@ -336,12 +343,12 @@ PushNotification.localNotification({
   ignoreInForeground: false, // (optional) if true, the notification will not be visible when the app is in the foreground (useful for parity with how iOS notifications appear). should be used in combine with `com.dieam.reactnativepushnotification.notification_foreground` setting
   shortcutId: "shortcut-id", // (optional) If this notification is duplicative of a Launcher shortcut, sets the id of the shortcut, in case the Launcher wants to hide the shortcut, default undefined
   onlyAlertOnce: false, // (optional) alert will open only once with sound and notify, default: false
-  
+
   when: null, // (optional) Add a timestamp (Unix timestamp value in milliseconds) pertaining to the notification (usually the time the event occurred). For apps targeting Build.VERSION_CODES.N and above, this time is not shown anymore by default and must be opted into by using `showWhen`, default: null.
   usesChronometer: false, // (optional) Show the `when` field as a stopwatch. Instead of presenting `when` as a timestamp, the notification will show an automatically updating display of the minutes and seconds since when. Useful when showing an elapsed time (like an ongoing phone call), default: false.
   timeoutAfter: null, // (optional) Specifies a duration in milliseconds after which this notification should be canceled, if it is not already canceled, default: null
 
-  messageId: "google:message_id", // (optional) added as `message_id` to intent extras so opening push notification can find data stored by @react-native-firebase/messaging module. 
+  messageId: "google:message_id", // (optional) added as `message_id` to intent extras so opening push notification can find data stored by @react-native-firebase/messaging module.
 
   actions: ["Yes", "No"], // (Android only) See the doc for notification actions to know more
   invokeApp: true, // (optional) This enable click on actions to bring back the application to foreground or stay in background, default: true
@@ -445,17 +452,21 @@ If you want to use a different default channel for remote notification, refer to
 For local notifications, the same kind of option is available:
 
 - you can use:
+
   ```xml
     <meta-data
         android:name="com.dieam.reactnativepushnotification.default_notification_channel_id"
         android:value="@string/default_notification_channel_id" />
   ```
+
 - If not defined, fallback to the Firebase value defined in the `AndroidManifest`:
+
   ```xml
     <meta-data
         android:name="com.google.firebase.messaging.default_notification_channel_id"
         android:value="..." />
   ```
+
 - If not defined, fallback to the default Firebase channel id `fcm_fallback_notification_channel`
 
 ### List channels
@@ -596,6 +607,7 @@ Returns an array of local scheduled notification objects containing:
 ```js
 PushNotification.abandonPermissions()
 ```
+
 Revokes the current token and unregister for all remote notifications received via APNS or FCM.
 
 ## Notification priority
@@ -612,7 +624,7 @@ Available options:
 "default" = NotficationCompat.PRIORITY_DEFAULT
 ```
 
-More information: https://developer.android.com/reference/android/app/Notification.html#PRIORITY_DEFAULT
+More information: <https://developer.android.com/reference/android/app/Notification.html#PRIORITY_DEFAULT>
 
 ## Notification visibility
 
@@ -623,16 +635,18 @@ Available options:
 ```
 "private" = NotficationCompat.VISIBILITY_PRIVATE\
 "public" = NotficationCompat.VISIBILITY_PUBLIC\
-"secret" = NotficationCompat.VISIBILITY_SECRET 
+"secret" = NotficationCompat.VISIBILITY_SECRET
 ```
-More information: https://developer.android.com/reference/android/app/Notification.html#VISIBILITY_PRIVATE
+
+More information: <https://developer.android.com/reference/android/app/Notification.html#VISIBILITY_PRIVATE>
 
 ## Notification importance
 
-(optional) Specify `importance` to set importance of notification. Default value: Importance.HIGH  
+(optional) Specify `importance` to set importance of notification. Default value: Importance.HIGH
 Constants available on the `Importance` object. `import PushNotification, {Importance} from 'react-native-push-notification';`
 
 Available options:
+
 ```
 Importance.DEFAULT = NotificationManager.IMPORTANCE_DEFAULT\
 Importance.HIGH = NotificationManager.IMPORTANCE_HIGH\
@@ -642,7 +656,7 @@ Importance.NONE= NotificationManager.IMPORTANCE_NONE\
 Importance.UNSPECIFIED = NotificationManager.IMPORTANCE_UNSPECIFIED
 ```
 
-More information: https://developer.android.com/reference/android/app/NotificationManager#IMPORTANCE_DEFAULT
+More information: <https://developer.android.com/reference/android/app/NotificationManager#IMPORTANCE_DEFAULT>
 
 ## Show notifications while the app is in foreground
 
@@ -659,19 +673,21 @@ On Android 6.0 (API level 23) and forward, the Doze was introduced to reduce bat
 This can significantly impact the power use of the device when idle. So it must only be used when the notification is required to go off on a exact time, for example on a calendar notification.
 
 More information:
-https://developer.android.com/training/monitoring-device-state/doze-standby
+<https://developer.android.com/training/monitoring-device-state/doze-standby>
 
 ## Repeating Notifications
 
 (optional) Specify `repeatType` and optionally `repeatTime` (Android-only) while scheduling the local notification. Check the local notification example above.
 
 ### iOS
+
 Property `repeatType` can only be `month`, `week`, `day`, `hour`, `minute`.
 
 NOTE: `repeatTime` do not work with iOS.
 
 ### Android
-Property `repeatType` could be one of `month`, `week`, `day`, `hour`, `minute`, `time`. 
+
+Property `repeatType` could be one of `month`, `week`, `day`, `hour`, `minute`, `time`.
 
 The interval used can be configured to a different interval using `repeatTime`. If `repeatType` is `time`, `repeatTime` must be specified as the number of milliseconds between each interval.
 For example, to configure a notification every other day
@@ -701,11 +717,12 @@ Make sure you have the receiver in `AndroidManifest.xml`:
   <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions" />
 ```
 
-Notifications with inline reply: 
+Notifications with inline reply:
 
-You must register an action as "ReplyInput", this will show in the notifications an input to write in. 
+You must register an action as "ReplyInput", this will show in the notifications an input to write in.
 
 EXAMPLE:
+
 ```javascript
 PushNotification.localNotificationSchedule({
   message: "My Notification Message", // (required)
@@ -716,12 +733,12 @@ PushNotification.localNotificationSchedule({
 });
 ```
 
-To get the text from the notification: 
+To get the text from the notification:
 
 ```javascript
 ...
 if(notification.action === "ReplyInput"){
-  console.log("texto", notification.reply_text)// this will contain the inline reply text. 
+  console.log("texto", notification.reply_text)// this will contain the inline reply text.
 }
 ...
 ```
@@ -751,11 +768,13 @@ Uses the [ShortcutBadger](https://github.com/leolin310148/ShortcutBadger) on And
 ```js
 PushNotification.subscribeToTopic(topic: string)
 ```
+
 Subscribe to a topic (works only with Firebase)
 
 ```js
 PushNotification.unsubscribeFromTopic(topic: string)
 ```
+
 Unsubscribe from a topic (works only with Firebase)
 
 ## Android Custom Notification Handling
@@ -791,7 +810,7 @@ RNPushNotification.IntentHandlers.add(new RNPushNotification.RNIntentHandler() {
     // This should return the bundle data that will be serialized to the `notification.data`
     // property sent to the `onNotification()` handler. Return `null` if there is no data
     // or this is not an intent from your provider.
-    
+
     // Example:
     if (intent.hasExtra("MY_NOTIFICATION_PROVIDER_DATA_KEY")) {
       return intent.getBundleExtra("MY_NOTIFICATION_PROVIDER_DATA_KEY");
@@ -818,4 +837,3 @@ PushNotification.checkPermissions(callback: Function) //Check permissions
 ```js
 PushNotification.getApplicationIconBadgeNumber(callback: Function) //Get badge number
 ```
-
